@@ -32,6 +32,7 @@ COLUMN_ALIASES = {
 
 @dataclass(slots=True)
 class PIEReader:
+    """Reader for PIE-style pedestrian annotations driven by YAML config."""
     config_path: str | Path
 
     def _load_config(self) -> dict:
@@ -39,6 +40,7 @@ class PIEReader:
             return yaml.safe_load(f) or {}
 
     def _dataset_root(self) -> Path:
+        """Return configured PIE dataset root directory."""
         cfg = self._load_config()
         root = cfg.get("pie_dataset_root")
         if not root:
@@ -81,6 +83,7 @@ class PIEReader:
             raise ValueError("Invalid bounding boxes found (x2<=x1 or y2<=y1)")
 
     def load_annotations(self) -> pd.DataFrame:
+        """Load, normalize, validate, and return annotations as a DataFrame."""
         root = self._dataset_root()
         files = self._collect_annotation_files(root)
         frames: Iterable[pd.DataFrame] = (self._normalize_columns(self._read_file(p)) for p in files)

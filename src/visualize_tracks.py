@@ -8,6 +8,7 @@ from export_serialized import load_scenes_pickle
 
 
 def plot_scene(scene, output_path: Path) -> None:
+    """Plot history/future trajectories and neighbors for one scene sample."""
     fig, ax = plt.subplots(figsize=(6, 6))
 
     hist = scene.history

@@ -8,6 +8,7 @@ from export_serialized import load_scenes_pickle
 
 
 def ade_fde(pred: np.ndarray, gt: np.ndarray) -> tuple[float, float]:
+    """Compute ADE and FDE for one trajectory pair shaped [T, 2]."""
     # pred/gt: [T, 2] for x,y
     errors = np.linalg.norm(pred - gt, axis=1)
     ade = float(np.mean(errors))
@@ -16,6 +17,7 @@ def ade_fde(pred: np.ndarray, gt: np.ndarray) -> tuple[float, float]:
 
 
 def evaluate_predictions(predictions: list[np.ndarray], targets: list[np.ndarray]) -> dict[str, float]:
+    """Aggregate mean ADE/FDE across prediction-target trajectory lists."""
     ades: list[float] = []
     fdes: list[float] = []
     for pred, target in zip(predictions, targets, strict=True):

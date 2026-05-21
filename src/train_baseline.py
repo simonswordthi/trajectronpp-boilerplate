@@ -10,6 +10,7 @@ from export_serialized import load_scenes_pickle
 
 
 def constant_velocity_predict(history: np.ndarray, future_len: int) -> np.ndarray:
+    """Predict future [T,2] by propagating last observed velocity from history."""
     # history: [H, 6], x/y in first two dims, vx/vy in 3rd/4th dims
     last_xy = history[-1, :2]
     vxvy = history[-1, 2:4]
@@ -25,6 +26,7 @@ def constant_velocity_predict(history: np.ndarray, future_len: int) -> np.ndarra
 
 
 def run_baseline(scenes: list, max_scenes: int | None = None) -> dict[str, float]:
+    """Run constant-velocity baseline on scenes and return ADE/FDE metrics."""
     selected = scenes if max_scenes is None else scenes[:max_scenes]
     preds: list[np.ndarray] = []
     gts: list[np.ndarray] = []

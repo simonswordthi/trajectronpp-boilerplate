@@ -15,6 +15,7 @@ def split_scene_ids(
     val_ratio: float = 0.15,
     seed: int = 42,
 ) -> dict[str, list[str]]:
+    """Split unique scene IDs into train/val/test partitions reproducibly."""
     uniq = sorted(set(scene_ids))
     rng = random.Random(seed)
     rng.shuffle(uniq)

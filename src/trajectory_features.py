@@ -8,6 +8,7 @@ import yaml
 
 
 def compute_bottom_center(df: pd.DataFrame) -> pd.DataFrame:
+    """Compute bottom-center point from bbox columns and add x/y columns."""
     out = df.copy()
     out["x"] = (out["bbox_x1"] + out["bbox_x2"]) / 2.0
     out["y"] = out["bbox_y2"]
@@ -15,6 +16,7 @@ def compute_bottom_center(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def add_relative_coordinates(df: pd.DataFrame, history_len: int) -> pd.DataFrame:
+    """Add x_rel/y_rel using each track's last observation point as anchor."""
     out = df.copy()
     out["x_rel"] = np.nan
     out["y_rel"] = np.nan
@@ -33,6 +35,7 @@ def add_relative_coordinates(df: pd.DataFrame, history_len: int) -> pd.DataFrame
 
 
 def add_velocity_acceleration(df: pd.DataFrame, frame_dt: float = 1.0) -> pd.DataFrame:
+    """Add vx/vy and ax/ay via first and second finite differences."""
     out = df.copy()
     out[["vx", "vy", "ax", "ay"]] = np.nan
 
@@ -51,6 +54,7 @@ def add_velocity_acceleration(df: pd.DataFrame, frame_dt: float = 1.0) -> pd.Dat
 
 
 def smooth_positions(df: pd.DataFrame, window: int = 3) -> pd.DataFrame:
+    """Apply centered rolling mean smoothing on x/y per pedestrian track."""
     out = df.copy()
     for col in ["x", "y"]:
         out[col] = (
@@ -61,6 +65,7 @@ def smooth_positions(df: pd.DataFrame, window: int = 3) -> pd.DataFrame:
 
 
 def build_features(track_df: pd.DataFrame, history_len: int, frame_dt: float = 1.0, smooth: bool = False) -> pd.DataFrame:
+    """Run full feature pipeline for x/y, relative coords, velocity, acceleration."""
     out = compute_bottom_center(track_df)
     if smooth:
         out = smooth_positions(out)

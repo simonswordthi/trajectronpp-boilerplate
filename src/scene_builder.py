@@ -40,6 +40,7 @@ def build_sliding_windows(
     future_len: int,
     stride: int = 1,
 ) -> list[dict[str, Any]]:
+    """Build per-agent history/future windows with same-window neighbors."""
     windows: list[dict[str, Any]] = []
     total_len = history_len + future_len
 
@@ -80,6 +81,7 @@ def build_sliding_windows(
 
 
 def windows_to_scenes(windows: list[dict[str, Any]]) -> list[Scene]:
+    """Convert window dictionaries into typed Scene objects with Node lists."""
     scenes: list[Scene] = []
     for w in windows:
         target_states = np.vstack([w["history"], w["future"]])

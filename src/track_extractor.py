@@ -13,6 +13,7 @@ def extract_tracks(
     future_len: int,
     max_frame_gap: int = 1,
 ) -> pd.DataFrame:
+    """Group per scene/pedestrian, sort by time, filter short tracks, mark gaps."""
     required = {"scene_id", "ped_id", "frame_id", "bbox_x1", "bbox_y1", "bbox_x2", "bbox_y2"}
     if not required.issubset(annotations.columns):
         raise ValueError(f"Missing required columns: {sorted(required - set(annotations.columns))}")
@@ -46,6 +47,7 @@ def extract_tracks(
 
 
 def tracks_to_dict(track_df: pd.DataFrame) -> dict[str, dict[str, pd.DataFrame]]:
+    """Return nested mapping scene_id -> ped_id -> ordered track DataFrame."""
     out: dict[str, dict[str, pd.DataFrame]] = {}
     for (scene_id, ped_id), g in track_df.groupby(["scene_id", "ped_id"], sort=False):
         out.setdefault(str(scene_id), {})[str(ped_id)] = g.sort_values("frame_id").reset_index(drop=True)
