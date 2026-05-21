@@ -2,9 +2,12 @@ from __future__ import annotations
 
 import pickle
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-def save_scenes_pickle(scenes: list[Any], path: str | Path) -> None:
+if TYPE_CHECKING:
+    from scene_builder import Scene
+
+def save_scenes_pickle(scenes: list["Scene"] | list[Any], path: str | Path) -> None:
     """Serialize scene-like objects as a pickle file.
 
     Warning:
@@ -16,8 +19,12 @@ def save_scenes_pickle(scenes: list[Any], path: str | Path) -> None:
         path: Output pickle file path.
 
     Raises:
+        TypeError: If scenes is not provided as a list.
         OSError: If writing the file fails.
     """
+    if not isinstance(scenes, list):
+        raise TypeError("scenes must be provided as a list")
+
     p = Path(path)
     p.parent.mkdir(parents=True, exist_ok=True)
     with p.open("wb") as f:

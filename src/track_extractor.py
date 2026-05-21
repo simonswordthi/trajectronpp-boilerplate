@@ -32,10 +32,6 @@ def extract_tracks(
         if len(g) < minimum:
             continue
 
-        if g["has_gap"].any():
-            # Keep but mark fragmented; caller can filter if desired.
-            pass
-
         g["scene_id"] = str(scene_id)
         g["ped_id"] = str(ped_id)
         rows.append(g)
