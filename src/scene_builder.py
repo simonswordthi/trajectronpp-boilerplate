@@ -8,6 +8,8 @@ import numpy as np
 import pandas as pd
 import yaml
 
+from export_serialized import save_scenes_pickle
+
 
 STATE_COLUMNS = ["x", "y", "vx", "vy", "ax", "ay"]
 
@@ -131,8 +133,6 @@ def main() -> None:
         stride=int(prep.get("stride", 1)),
     )
     scenes = windows_to_scenes(windows)
-
-    from export_serialized import save_scenes_pickle
 
     out = Path("data/processed/pie_scenes.pkl")
     out.parent.mkdir(parents=True, exist_ok=True)

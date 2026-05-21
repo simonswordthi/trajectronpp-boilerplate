@@ -7,6 +7,10 @@ from typing import Any
 def save_scenes_pickle(scenes: list[Any], path: str | Path) -> None:
     """Serialize scene-like objects as a pickle file.
 
+    Warning:
+        Pickle should only be used for trusted workflows because loading pickle
+        data later can execute arbitrary code from malicious payloads.
+
     Args:
         scenes: Sequence of serializable scene-like objects.
         path: Output pickle file path.
