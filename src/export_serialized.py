@@ -5,7 +5,15 @@ from pathlib import Path
 from typing import Any
 
 def save_scenes_pickle(scenes: list[Any], path: str | Path) -> None:
-    """Serialize a list of scene-like objects as a pickle file."""
+    """Serialize scene-like objects as a pickle file.
+
+    Args:
+        scenes: Sequence of serializable scene-like objects.
+        path: Output pickle file path.
+
+    Raises:
+        OSError: If writing the file fails.
+    """
     p = Path(path)
     p.parent.mkdir(parents=True, exist_ok=True)
     with p.open("wb") as f:
@@ -13,6 +21,22 @@ def save_scenes_pickle(scenes: list[Any], path: str | Path) -> None:
 
 
 def load_scenes_pickle(path: str | Path) -> list[Any]:
-    """Load and return scene-like objects from a pickle file path."""
+    """Load scene-like objects from a pickle file.
+
+    Warning:
+        Only load pickle files from trusted sources. Pickle deserialization can
+        execute arbitrary code for malicious payloads.
+
+    Args:
+        path: Input pickle file path.
+
+    Returns:
+        Deserialized list of scene-like objects.
+
+    Raises:
+        FileNotFoundError: If the file does not exist.
+        OSError: If reading fails.
+        pickle.UnpicklingError: If file content is invalid pickle.
+    """
     with Path(path).open("rb") as f:
         return pickle.load(f)

@@ -1,13 +1,13 @@
 # PIE → Trajectron++ Boilerplate
 
-Dieses Repository enthält eine erste pedestrian-only Baseline-Pipeline:
+This repository provides a first pedestrian-only baseline pipeline:
 
-1. PIE-Annotationen laden
-2. Tracks extrahieren
-3. Trajektorien-Features berechnen (`x,y,vx,vy,ax,ay`)
-4. Sliding Windows und Scene/Node-Struktur erzeugen
-5. Datensplits erstellen
-6. Baseline mit einfacher Vorhersage evaluieren (ADE/FDE)
+1. Load PIE annotations
+2. Extract pedestrian tracks
+3. Compute trajectory features (`x,y,vx,vy,ax,ay`)
+4. Build sliding windows and Scene/Node structures
+5. Create reproducible dataset splits
+6. Evaluate a simple baseline with ADE/FDE
 
 ## Installation
 
@@ -17,13 +17,13 @@ source .venv/bin/activate
 pip install -e .
 ```
 
-## Konfiguration
+## Configuration
 
-- `configs/paths.yaml`: Pfade für raw/interim/processed
-- `configs/preprocessing.yaml`: Preprocessing-Parameter
-- `configs/training.yaml`: Training-/Eval-Parameter
+- `configs/paths.yaml`: raw/interim/processed paths
+- `configs/preprocessing.yaml`: preprocessing parameters
+- `configs/training.yaml`: training/evaluation parameters
 
-## Nutzung
+## Usage
 
 ```bash
 pie-reader
@@ -36,4 +36,4 @@ evaluate-baseline
 visualize-tracks
 ```
 
-Hinweis: Diese Version nutzt bewusst keine Behavioral-Features in der Inferenz.
+Note: this baseline intentionally does not use behavioral features during inference.
