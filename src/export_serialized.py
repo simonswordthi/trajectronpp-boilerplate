@@ -4,8 +4,6 @@ import pickle
 from pathlib import Path
 from typing import Any
 
-
-
 def save_scenes_pickle(scenes: list[Any], path: str | Path) -> None:
     p = Path(path)
     p.parent.mkdir(parents=True, exist_ok=True)
