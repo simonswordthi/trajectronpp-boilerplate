@@ -1,0 +1,4 @@
+raw_data_root: data/raw
+interim_data_root: data/interim
+processed_data_root: data/processed
+pie_dataset_root: data/raw/pie
